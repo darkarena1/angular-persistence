@@ -6,6 +6,7 @@
   "module": "index.js",
   "scripts": {
     "build": "node build.js",
+    "debug": "karma start karma.conf.js --browsers=Chrome --single-run=false",
     "test": "karma start",
     "pack-lib": "npm pack ./dist",
     "publish-lib": "npm publish ./dist",

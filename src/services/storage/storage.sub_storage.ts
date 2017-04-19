@@ -124,6 +124,6 @@ export class SubStorage implements IStorage {
     }
 
     private _getNamespacedKey(key: string): string {
-        return this._namespace + ':' + key;
+        return this._namespace + '::' + key;
     }
 }

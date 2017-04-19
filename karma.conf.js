@@ -1,7 +1,6 @@
 // Karma configuration for Unit testing
 
 module.exports = function (config) {
-
     var configuration = {
 
         // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -36,6 +35,7 @@ module.exports = function (config) {
 
         // webpack
         webpack: {
+            // devtool: '#inline-source-map',
             resolve: {
                 extensions: ['.ts', '.js']
             },

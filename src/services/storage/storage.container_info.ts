@@ -17,7 +17,7 @@ export class ContainerInfo {
     constructor(private _namespace: string, private _container: IPersistenceContainer) {
         let infoObj = _container.get(this._namespace);
 
-        // If we have an existing object, check its typw
+        // If we have an existing object, check its type
         if (infoObj) {
             if (typeof infoObj !== 'object' || !infoObj[INFO_KEY]) {
                 throw new Error('Potential attribute conflict detected');
@@ -54,7 +54,8 @@ export class ContainerInfo {
      * @returns {string[]} 
      */
     public getAttributes(): string[] {        
-        return Object.keys(this._getInfo());
+        return Object.keys(this._getInfo())
+            .filter((key) => key !== INFO_KEY);
     }
 
     /**

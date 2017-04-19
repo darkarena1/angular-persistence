@@ -26,7 +26,7 @@ describe('PersistenceServiceTest: Memory', () => {
 
     it("Should persist root with namespace", () => {
         container.set('abc123', 'TESTVAL');
-        expect(service.get('namespace:abc123')).toBe('TESTVAL');
+        expect(service.get('namespace::abc123')).toBe('TESTVAL');
     });
 
     it("Should not persist value on new object", () => {
@@ -71,13 +71,28 @@ describe('PersistenceServiceTest: Memory', () => {
     });
 });
 
-// it("Should return persisted value on first use with oneUse flag set", () => {
-//         service.set('abc123', 'TESTVAL', {oneUse: true});
-//         expect(service.get('abc123')).toBe('TESTVAL');        
-//     });
+describe('PersistenceServiceTest: Memory - oneUse', () => {
+    let service: PersistenceService;
+    let container: IPersistenceContainer;
 
-//     it("Should return undefined on second use with oneUse flag set", () => {
-//         service.set('abc123', 'TESTVAL', {oneUse: true});
-//         service.get('abc123');
-//         expect(service.get('abc123')).toBeUndefined();        
-//     });
+    beforeEach(() => {
+        service = new PersistenceService();
+        container = service.createContainer('namespace', {oneUse: true});
+    });
+
+    afterEach(() => {
+        service = null;
+        container = null;
+    });
+
+    it("Should return persisted value on first use", () => {
+        container.set('abc123', 'TESTVAL');
+        expect(container.get('abc123')).toBe('TESTVAL');        
+    });
+
+    it("Should return undefined on second use", () => {
+        container.set('abc123', 'TESTVAL');
+        container.get('abc123');
+        expect(container.get('abc123')).toBeUndefined();        
+    });
+});
