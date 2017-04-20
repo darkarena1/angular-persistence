@@ -1,0 +1,56 @@
+{
+    "extends": "tslint:recommended",
+    "rulesDirectory": [
+        "node_modules/codelyzer"
+    ],
+    "rules": {
+        "directive-selector": [
+            true,
+            "attribute",
+            "angular",
+            "camelCase"
+        ],
+        "component-selector": [
+            true,
+            "element",
+            "angular",
+            "kebab-case"
+        ],
+        "use-input-property-decorator": true,
+        "use-output-property-decorator": true,
+        "use-host-property-decorator": true,
+        "no-attribute-parameter-decorator": true,
+        "no-consecutive-blank-lines": false,
+        "no-input-rename": true,
+        "no-output-rename": true,
+        "no-forward-ref": true,
+        "no-trailing-whitespace": [
+            false
+        ],
+        "use-life-cycle-interface": true,
+        "use-pipe-transform-interface": true,
+        "component-class-suffix": [
+            true,
+            "Component"
+        ],
+        "directive-class-suffix": [
+            true,
+            "Directive"
+        ],
+        "import-destructuring-spacing": true,
+        "templates-use-public": true,
+        "no-access-missing-member": true,
+        "invoke-injectable": true,
+        "ordered-imports": [
+            false
+        ],
+        "object-literal-sort-keys": false,
+        "quotemark": [
+            false
+        ],
+        "trailing-comma": [
+            false
+        ],
+        "variable-name": [ false ]
+    }
+}

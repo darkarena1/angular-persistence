@@ -16,12 +16,12 @@ This project allows you to persist data within an **Angular 2** or **Angular 4**
 
 To use this library, install it via npm into your project.  
 
-```Shell
+```shell
 npm install angular-persistence --save 
 ```
 
 Next install the Persistence Module into your module:
-```Typescript
+```typescript
 import { PersistenceModule } from 'angular-persistence';
 
 @ngModule System.config({
@@ -29,9 +29,9 @@ import { PersistenceModule } from 'angular-persistence';
 });
 ```
 
-Once imported, the Module can be used from within your components or other Injectables:
+Once imported, the Module can be used from within your components or other injectables:
 
-```Typescript
+```typescript
 import { PersistenceService } from 'angular-persistence';
 
 class Foo {
@@ -65,9 +65,7 @@ There are more options for each of these methods.  For complete usage, please se
 
 This library is capable of handling various storage types within the browser.  These are specified on get, remove, removeall, and clean methods via the type parameter.  For set and cache the type is specified on the config object.  The _StorageType_ enumeration contains the list of available storage types.  If not storage type is specified, Memory storage type is used.  Currently the framework supports:
 
-- **MEMORY**: the fastest and most flexible memory type.  This will simply store the object within the service instance's memory.  This storage type WILL NOT persist among page re-loads and objects inside of
-this collection, if mutated, will mutate all instances of the object.  As such, this works best with immutable objects and can accomodate large data sets as well as objects that have some actual
-logic.
+- **MEMORY**: the fastest and most flexible memory type.  This will simply store the object within the service instance's memory.  This storage type WILL NOT persist among page re-loads and objects inside of this collection, if mutated, will mutate all instances of the object.  As such, this works best with immutable objects and can accomodate large data sets as well as objects that have some actual logic.
 
 - **IMMUTABLE_MEMORY**: this storage type is just like the memory storage type EXCEPT that the objects are serialized before they are saved and then deserialized on a get.  This is the same as browser and local storage, only the data is not persisted beyond the service instance.  Just like local and session storage, however, this storage type is incapable of serializing objects that are not
 serializable with the Javascript JSON class.
@@ -86,7 +84,7 @@ persistenceService.clean(StorageType.SESSION);
 
 ## Setter Configuration
 
-The config is specified for both the _cache_ and the _set_ methods of the persistence framework and it determines how the objects are to be cached and for how long.  In the previous section we introduced  you to the 'type' property of the config.  Now we'll delve into some of the others:
+The config is specified for both the _cache_ and the _set_ methods of the persistence framework and it determines how the objects are to be cached and for how long.  In the previous section we introduced you to the 'type' property of the config.  Now we'll delve into some of the others:
 
 - **timeout** - specifies a value (in ms) for when the value in the property becomes 'stale'.  Every time the value is accessed via the 'get' or 'cache' method, the timeout counter is restarted.
 - **expireAfter** - specifies after how much time (in ms) the stored value will be valid for after it has been set.  Unlike the timeout, this value will not reset when the value is read, only when a new value is set.
@@ -96,9 +94,9 @@ The config is specified for both the _cache_ and the _set_ methods of the persis
 persistenceService.set('myName', 'scott', {type: StorageType.SESSION, oneUse: true});
 ```
 
-## Proxies and Property Bindings
+## Facades and Property Bindings
 
-This framework supports a lot of options, and as such it may be hard to use consistently with the normal getters and setters.  As such, the preferred way for using this service is through a proxy which has a greatly simplified API that enforces consistency of your desired options and greatly simplifies the frameworks usage.  By creating a proxy, you do not need to specify the key or any configuration data.
+This framework supports a lot of options, and as such it may be hard to use consistently with the normal getters and setters.  As such, the preferred way for using this service is through a facade which has a simplified API that enforces the consistency of your desired options and greatly simplifies the frameworks usage.  By creating a facade, you do not need to specify the configuration data.
 
 ```typescript
 @Injectable()
@@ -106,21 +104,20 @@ class Foo {
     private myNameProxy;
 
     constructor (persistenceService: PersistenceService) {
-        this.myNameProxy = persistenceService.createProxy<string>(
-            'myName', 
+        this.myName = persistenceService.createFacade<string>(
             {type: StorageType.SESSION, oneUse: true}
         );
     }
 
     accessData() {
         // sets the myName attribute on session
-        this.myNameProxy.set('scott');
+        this.myNameProxy.set('myName','scott');
 
         // gets the myName attribute
-        this.myNameProxy.get();
+        this.myNameProxy.get('myName');
 
         // returns undefined because oneUse is set
-        this.myNameProxy.get();
+        this.myNameProxy.get('myName');
 
         // removes myName attribute if we have one
         this.remove();
@@ -128,20 +125,18 @@ class Foo {
 }
 ```
 
-Finally, it is possible to create a bound property on your object that would make things even easier.  If doing this, however, it may not be entirely clear that you are interacting with a bound property and things like doing a delete would erase the property values.  There are some enhancements in ES6 which may eventually allow us to make this a bit cooler.  As such, I tend to prefer the proxys, but you can use the option below if you want to make your code uber concise.
+Finally, it is possible to create a bound property on your object that would make things even easier.  If doing this, however, it may not be entirely clear that you are interacting with a bound property and things like doing a delete would erase the property values.  There are some enhancements in ES6 which may eventually allow us to make this a bit cooler.  For now, however, this should suffice.
 
 ```typescript
 @Injectable()
 class Foo {
-    constructor (persistenceService: PersistenceService) {
-        public myName: string;
+    myName: string;
 
-        persistenceService.defineBoundProperty<string>(
-            this,
-            'myName',
-            'property_', 
+    constructor (persistenceService: PersistenceService) {
+        this.myName = persistenceService.propertyBinding<string>(
+            'myNameProperty', 
             {type: StorageType.SESSION, oneUse: true}
-        );
+        )
     }
 
     accessData() {
@@ -153,38 +148,55 @@ class Foo {
 
         // returns undefined because oneUse is set
         this.myName;
+
+        // same as doing a delete on the property.  IF not already
+        // undefined, this would remove the property from storage
+        this.myName = undefined;
     }
 }
 ```
-Technically you don't need to define the property ahead of time but typescript likes to have it there and it allows for code completion.  Defining a bound property will replace any existing property.
+One word of warning, it's not always clear what properties are bound and which are not because they seem to be used like regular javascript properties.  Please understand the implications of this before using it and see the documentation on Object.defineProperty in the javascript specifications before using.  
 
-Pretty cool, right?
+Now that the warnings have been put asside, this is pretty cool, right?
 
-## Observable Cache
+## Rx Usage
 
-Much of AngularJS uses ReactiveX design using Observables.  Services and components may wish to cache values returned from an AJAX call and return the cached data rather then waiting for live data.  As such, the Persistence framework supports an Rx command for caching.  Using this method, your service or component can access a cached version if it is available or it can load from the server if it is not.
+Much of AngularJS uses ReactiveX design using Observables.  Services and components may wish to cache values returned from an AJAX call and return the cached data rather then waiting for live data.  As such, the Persistence framework supports a number of Rx type commands.
+
+If you wanted to observe all changes to the attributes on the persistence framework, you could use the following:
 
 ```typescript
-persistenceService.cache(
+let subscription = persistenceService.changes().subscribe((key, storageType) => {
+    console.log( key + ' was changed on sotrage number '+storageType));
+}
+```
+
+This will return all changes and can be fairly chatty, so if you wanted to listen to changes for a particular property, you could supply a key and/or storage type to listen to.
+
+```typescript
+let subscription = persistenceService.changes({key: 'myProp', type: StorageType.SSESION}).subscribe( (key, storageType)=> {
+    console.log('myProp was changed on the session');
+}
+```
+
+Please note that the changes Observable is a HOT observable that returns changes over time.  If you use this observable it is your responsibility to "unsubscribe" from the service when it is done.
+
+In addition to monitoring the cache for changes, there is one other method on the persistence service which supports Rx.  This method supports a single value observable which marks its stream as complete once a value is recieved.  Furthermore, you can specify a loader that will load the value automatically if no value is already defined, thus making this method perfect for caching the values of an Angular httpService call.  Please take a look at this example:
+
+```typescript
+persistenceService.getWhenAvailable(
     'myName', 
-    () => new myUserObservable(), 
+    (key) => Observable.of('Scott O\'Bryan'), 
     {type: StorageType.SESSION, timeout: 1000 * 60 * 60}
 ).subscribe (...);
 ```
 
-To load the cache, we can also allow our loader to return a static value, in this case the observable will load 5 into the cache immedietly and then work off the cached value.  This makes Rx with caching easy whether you want to provide an observable (like from the angular http service) or whether you want to load an initial value from a function synchronously and then move into an Rx design.
+If the myName object is already set on the session then that object is returned immedietly in the Observable.  If not then the loader will be used (if one has been provided.  In either case, whenever the last value is recieved from the observabe OR the first value is recieved from the PersistenceServices set method, this Observer will return that value.  As with any Rx design pattern, there are a lot of other implications to this
+
+Finally, the persistence service provides a caching framework that, essentially, wraps the 'getWhenAvailable' method, but is isolated and much easier to understand and use throughout your code:
 
 ```typescript
-let subscription = persistenceService.cache(
-    'myName', 
-    () => 5, 
-    {type: StorageType.SESSION, timeout: 1000 * 60 * 60}
-).subscribe (...);
-```
-Additionally, the caching framework has its own proxy object which can be used to simplify getting a reloadable value from the cache.
-
-```typescript
-let proxy =  persistenceService.createCacheProxy(
+let proxy =  persistenceService.createCache(
     'myName', 
     () => new myUserObservable(), 
     {type: StorageType.SESSION, timeout: 1000 * 60 * 60}
@@ -193,9 +205,7 @@ let proxy =  persistenceService.createCacheProxy(
 proxy.get().subscribe(...);
 ```
 
-Because this takes advantage of Rx design, there is no reason to provide a property binder like we have available with the other proxy.  As such there is not one provided through the service.
-
-The reason I added this API was because I wanted to be able to cache user information for a period of time and have it work across applications.  By using the cache and binding my http observable to the cache value using SESSION storage, I can use the same object when navigating from one application to the other.
+The reason I added this API was because I wanted to be able to cache user information for a period of time and have it work across my applicaitons and services.  By using the cache and binding my http observable to the cache value using SESSION storage, I can use the same object when navigating from one application to the other.
 
 ## Change Listeners
 
