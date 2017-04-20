@@ -1,6 +1,6 @@
 {
   "name": "angular_persistence",
-  "version": "1.0.0-0",
+  "version": "1.0.0-1",
   "description": "A library to handle persistence for Angular 2 applications.",
   "main": "bundles/angular_persistence.umd.js",
   "module": "index.js",
@@ -16,8 +16,8 @@
   "typings": "index.d.ts",
   "author": "Scott O'Bryan",
   "repository": {
-    "type" : "git"
-  , "url" : "https://github.com/darkarena1/angular-persistence"
+    "type": "git",
+    "url": "https://github.com/darkarena1/angular-persistence"
   },
   "keywords": [
     "angular",
