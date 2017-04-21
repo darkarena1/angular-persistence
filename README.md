@@ -2,6 +2,7 @@
 >Library to aid in a consistent implementation of browser storage including memory, session, and local storage.
 
 [![npm version](https://badge.fury.io/js/angular_persistence.svg)](https://badge.fury.io/js/angular_persistence)
+[![Build Status](https://travis-ci.org/darkarena1/angular-persistence.svg?branch=master)](https://travis-ci.org/darkarena1/angular-persistence)
 
 This project allows you to persist data within an **Angular 2** or **Angular 4** application written in _TypeScript_, _ES6_ or _ES5_.  The implementations of the various storage techniques have been expanded and normalized such that no specific knowledge should be needed of the various storage types and thier uses.  In addition, the library will help with cleanup of persistent cached data by keeping track of which data has been loaded and where it is put.
 
