@@ -1,7 +1,7 @@
-# angular-persistence
+cd # angular-persistence
 >Library to aid in a consistent implementation of browser storage including memory, session, and local storage.
 
-[![npm version](https://badge.fury.io/js/angular_persistence.svg)](https://badge.fury.io/js/angular_persistence)
+[![npm version](https://badge.fury.io/js/angular-persistence.svg)](https://badge.fury.io/js/angular-persistence)
 [![Build Status](https://travis-ci.org/darkarena1/angular-persistence.svg?branch=master)](https://travis-ci.org/darkarena1/angular-persistence)
 
 This project allows you to persist data within an **Angular 2** or **Angular 4** application written in _TypeScript_, _ES6_ or _ES5_.  The implementations of the various storage techniques have been expanded and normalized such that no specific knowledge should be needed of the various storage types and thier uses.  In addition, the library will help with cleanup of persistent cached data by keeping track of which data has been loaded and where it is put.
@@ -190,7 +190,7 @@ CreateCache returns an Observable which will return a single value.  If there is
 
 The observable returned from the cache is guarenteed to have a single value.  If the observable returned from the loader has more then one value, the persistence framework will wait intil the last view is recieved before setting the value on the cache.
 
-## <a name="6"></a>6 Change Observable
+## <a name="6"></a>7 Change Observable
 
 If you wanted to observe all changes to the attributes on the persistence framework, you could use the following:
 
@@ -208,33 +208,13 @@ let subscription = persistenceService.changes({key: 'myProp', type: StorageType.
 }
 ```
 
-Please note that the changes Observable is a HOT observable that returns changes over time.  If you use this observable it is your responsibility to "unsubscribe" from the service when it is done.
-
-## <a name="7"></a>7 Change Listeners
-
-There is also a way to observe attribute changes within the service.  The service has an EventEmitter.
-
-```typescript
-let subscription = persistenceService.changes.subscribe((value) => {
-    console.log 'Value changed: ' + value.key + ' in sotrage number ' + value.type
-});
-```
-
-This will run the script for every change to every property in every storage type.  To limit the notifier to a single value in a single storage type, we can do the following:
-
-```typescript
-persistenceService.propertyChanges('myName', StorageType.SESSION)
-    .subscribe((value)=> { console.log('my value changed')});
-```
-This would log something only when the myName property in session storage changed.
-
 **_NOTE:_ these are hot multi-value Obserables per the Rx specification that return values over time.  It is important to remove your subscription from these observables when you no longer need them or a memory leak might occur.**
 
 ## <a name="8"></a>8 Contributors:
 - Scott O'Bryan
 
 ## <a name="9"></a>9 Acknowledgements:
-Special thanks to Roberto Simonetti for his angular-library-starter ((https://github.com/robisim74/angular-library-starter).  Saved me a bunch of time. 
+Special thanks to Roberto Simonetti for his angular-library-starter (https://github.com/robisim74/angular-library-starter).  Saved me a bunch of time. 
 
 ## <a name="10"></a>10 License
 MIT
