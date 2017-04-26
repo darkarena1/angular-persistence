@@ -18,12 +18,16 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/darkarena1/angular-persistence"
-  },
+  },  
   "keywords": [
     "angular",
-    "javascript",
-    "typescript",
-    "persistence"
+    "ngstorage",
+    "persistence",
+    "browser storage",
+    "web storage",
+    "session storage",
+    "local storage",
+    "angular storage"
   ],
   "license": "MIT",
   "peerDependencies": {
