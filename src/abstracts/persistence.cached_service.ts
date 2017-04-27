@@ -1,5 +1,5 @@
 import { CanActivate, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, ConnectableObservable }                                 from 'rxjs/Rx';
+import { Observable, ConnectableObservable }                                 from 'rxjs';
 import { ICache }                                                            from './persistence.cache';
 import { PersistenceService }                                                from '../services/persistence.service';
 

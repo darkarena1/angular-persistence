@@ -16,4 +16,4 @@ import { PersistenceService } from '../services/persistence.service';
     imports: [],
     providers: [PersistenceService],
 })
-export class AngularPersistenceModule { }
+export class PersistenceModule { }

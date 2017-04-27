@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter }                  from '@angular/core';
-import { Observable, Observer, Subscriber, Subject } from 'rxjs/Rx';
+import { Observable, Observer, Subscriber, Subject } from 'rxjs';
 import { CacheImpl }                                 from './persistence.cache-impl';
 import { IStorage }                                  from './storage/storage.interface';
 import { SubStorage }                                from './storage/storage.sub_storage';
@@ -48,7 +48,7 @@ export class PersistenceService {
      * @returns {Observable<ItemDefinition>} a hot observable that can monitor changes 
      *                                  to this framework over time.
      */
-    public changes(config?: ItemDefinition): Observable<ItemDefinition> {
+    public changes(config: ItemDefinition = {}): Observable<ItemDefinition> {
         let observable = this._emitter.asObservable();
 
         // apply the key filter
@@ -303,7 +303,7 @@ export class PersistenceService {
     public createCache<T>(
         key: string,
         loader: () => T | Observable<T>,
-        config?: CacheConfig 
+        config: CacheConfig = {} 
     ): ICache<T> {
         // for safety ensure that oneUse is not present.  It shouldn't be, but sometimes
         // typescript doesn't always catch errors

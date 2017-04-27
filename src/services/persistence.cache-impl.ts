@@ -1,4 +1,4 @@
-import { Observable }         from "rxjs/Rx";
+import { Observable }         from "rxjs";
 import { CacheConfig }        from '../types/persistence.cache_config';
 import { ICache }             from '../abstracts/persistence.cache';
 import { PersistenceService } from "../services/persistence.service";
@@ -19,7 +19,7 @@ import { StorageType }        from "../constants/persistence.storage_type";
  */
 export class CacheImpl<T> implements ICache<T> {
     private _value: T;
-    private _cachedObservable: Observable<T>;
+    private _cachedObservable: Observable<T> | undefined;
     private _changes: Observable<T>;
 
     /**
@@ -33,7 +33,7 @@ export class CacheImpl<T> implements ICache<T> {
         key: string,
         private _loader: () => T | Observable<T>,
         service: PersistenceService,
-        config?: CacheConfig
+        config: CacheConfig = {}
     ) {
         let type = config.type || StorageType.MEMORY;
 
