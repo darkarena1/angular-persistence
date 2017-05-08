@@ -1,7 +1,12 @@
-import { CanActivate, Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, ConnectableObservable }                                 from 'rxjs';
-import { ICache }                                                            from './persistence.cache';
-import { PersistenceService }                                                from '../services/persistence.service';
+import {
+    ActivatedRouteSnapshot,
+    CanActivate,
+    Resolve,
+    RouterStateSnapshot
+    } from '@angular/router';
+import { ConnectableObservable, Observable } from 'rxjs';
+import { ICache } from './persistence.cache';
+import { PersistenceService } from '../services/persistence.service';
 
 /**
  * This is a cache that also implements the <code>CanActivate</code> and <code>Resolve<T></code> 
@@ -20,7 +25,7 @@ import { PersistenceService }                                                fro
  * @author Scott O'Bryan
  * @since 1.0 
  */
-export abstract class AbstraceCachedService<T> implements ICache<T>, CanActivate, Resolve<T> {
+export abstract class AbstractCachedService<T> implements ICache<T>, CanActivate, Resolve<T> {
 
     /**
      * Returns an {Observable<T>} which will monitor changes to the 
@@ -62,7 +67,6 @@ export abstract class AbstraceCachedService<T> implements ICache<T>, CanActivate
      * 
      * @abstract
      */
-    public clear(): void;
     public clear(): void {
         return this.getCache().clear();
     }
@@ -103,5 +107,5 @@ export abstract class AbstraceCachedService<T> implements ICache<T>, CanActivate
      * @template T 
      * @returns {ICache<T>}
      */
-    protected abstract getCache<T>(): ICache<T>;
+    protected abstract getCache(): ICache<T>;
 }

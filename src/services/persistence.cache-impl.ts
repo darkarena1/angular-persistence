@@ -1,8 +1,8 @@
-import { Observable }         from "rxjs";
-import { CacheConfig }        from '../types/persistence.cache_config';
-import { ICache }             from '../abstracts/persistence.cache';
-import { PersistenceService } from "../services/persistence.service";
-import { StorageType }        from "../constants/persistence.storage_type";
+import { Observable } from 'rxjs';
+import { ICache } from '../abstracts/persistence.cache';
+import { StorageType } from '../constants/persistence.storage_type';
+import { PersistenceService } from '../services/persistence.service';
+import { CacheConfig } from '../types/persistence.cache_config';
 
 /**
  * Internal class which is an implementation of the ICache interface. This is 
@@ -83,6 +83,8 @@ export class CacheImpl<T> implements ICache<T> {
                     result = loaded as T;
                     this._value = result;
                 }
+            } else {
+                return observable;
             }
         }
 

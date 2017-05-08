@@ -20,23 +20,17 @@
         "use-output-property-decorator": true,
         "use-host-property-decorator": true,
         "no-attribute-parameter-decorator": true,
-        "no-consecutive-blank-lines": false,
+        "no-consecutive-blank-lines": [
+            false
+        ],
         "no-input-rename": true,
         "no-output-rename": true,
         "no-forward-ref": true,
-        "no-trailing-whitespace": [
-            false
-        ],
+        "no-trailing-whitespace": false,
         "use-life-cycle-interface": true,
         "use-pipe-transform-interface": true,
-        "component-class-suffix": [
-            true,
-            "Component"
-        ],
-        "directive-class-suffix": [
-            true,
-            "Directive"
-        ],
+        "component-class-suffix": true,
+        "directive-class-suffix": true,
         "import-destructuring-spacing": true,
         "templates-use-public": true,
         "no-access-missing-member": true,

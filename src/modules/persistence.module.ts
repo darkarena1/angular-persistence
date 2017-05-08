@@ -1,5 +1,5 @@
 import { NgModule }           from '@angular/core';
-import { PersistenceService } from '../angular-persistence';
+import { PersistenceService } from '../services/persistence.service';
 
 /**
  * The module for the persistence framework.  This will register the PersistenceService

@@ -3,7 +3,7 @@ export default {
     dest: './dist/bundles/angular-persistence.umd.js',
     format: 'umd',
     // Global namespace.
-    moduleName: 'angular.persistence',
+    moduleName: 'ng.AngularPersistence',
     // External libraries.
     external: [
         '@angular/core',
