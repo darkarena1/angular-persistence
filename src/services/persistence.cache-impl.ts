@@ -105,7 +105,7 @@ export class CacheImpl<T> implements ICache<T> {
      * Clears the cached value forcing a reload.
      */
     public clear(): void {
-        delete this._value;
+        this._value = undefined;
     }
 }
 
