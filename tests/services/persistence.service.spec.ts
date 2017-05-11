@@ -258,3 +258,85 @@ describe('PersistenceServiceTest: expires and maxAge', () => {
         }, 150);
     });
 });
+
+describe('PersistenceServiceTest: changeListener', () => {
+    let service: PersistenceService;
+    let callback: any;
+
+    beforeEach(() => {
+        service = new PersistenceService();
+        callback = jasmine.createSpy('callback');
+    });
+
+    afterEach(() => {
+        service = null;
+        callback = null;
+    });
+
+    it("Should not call callback on subscription", () => {
+        service.changes().subscribe(callback);
+        expect(callback).not.toHaveBeenCalled();
+    });
+
+    it("Should call callback on change", () => {
+        service.changes().subscribe(callback);
+        service.set('abc', '123');
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'abc'});
+    });
+
+    it("Should not call callback on change, multiple values", () => {
+        service.changes().subscribe(callback);
+        service.set('abc', '123');
+        service.set('def', '123');
+        expect(callback).toHaveBeenCalledTimes(2);
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'abc'});
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'def'});
+    });
+
+    it("Should not call callback filtered change", () => {
+        service.changes({key: 'abc'}).subscribe(callback);
+        service.set('abc', '123');
+        service.set('def', '123');
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'abc'});
+        expect(callback).not.toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'def'});
+    });
+
+    it("Should call callback on remove", () => {
+        service.set('abc', '123');
+        service.changes().subscribe(callback);
+        service.remove('abc');
+        expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'abc'});
+    });
+
+    it("Should not call callback on removal of undefined attribute", () => {
+        service.changes({key: 'abc'}).subscribe(callback);
+        service.remove('abc');
+        expect(callback).not.toHaveBeenCalled();
+    });
+
+    it("Should call callback on removal of defined attribute", () => {
+        service.set('abc', '123');
+        service.changes({key: 'abc'}).subscribe(callback);
+        service.remove('abc');
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'abc'});
+    });
+
+    it("Should call callback on setting of event with same value", () => {
+        service.changes().subscribe(callback);
+        service.set('abc', '123');
+        service.set('abc', '123');
+        expect(callback).toHaveBeenCalledTimes(2);
+    });
+
+    it("Should call callback for each value on removeAll", () => {
+        service.set('abc', '123');
+        service.set('def', '123');
+        service.changes().subscribe(callback);
+        service.removeAll();
+        expect(callback).toHaveBeenCalledTimes(2);
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'abc'});
+        expect(callback).toHaveBeenCalledWith({type: StorageType.MEMORY, key: 'def'});
+    });
+});
