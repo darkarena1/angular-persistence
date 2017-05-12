@@ -16,9 +16,10 @@ This project allows you to persist data within an **Angular 2** or **Angular 4**
 * [5 Property Bindings](#5)
 * [6 Observable Caches](#6)
 * [7 Change Observables](#7)
-* [8 Contributors](#8)
-* [9 Acknowledgements](#9)
-* [10 License](#10)
+* [8 Cachable Services](#8)
+* [9 Contributors](#9)
+* [10 Acknowledgements](#10)
+* [11 License](#11)
 
 ## <a name="1"></a>1 Basic Usage
 
@@ -212,11 +213,38 @@ let subscription = persistenceService.changes({key: 'myProp', type: StorageType.
 
 **_NOTE:_ these are hot multi-value Obserables per the Rx specification that return values over time.  It is important to remove your subscription from these observables when you no longer need them or a memory leak might occur.**
 
-## <a name="8"></a>8 Contributors:
+## <a name="8"></a>8 Cachable Services:
+
+For convienience the framework includes an abstract implementation of a cachable services that can be used to field http requests and whatnot.  The service contains resolve and canActivate guards for the Angular Router as well as a clear function and a get function.  In order to implement this service, you need only provide a cache from the persistence framework itself.  The minimum implementation for this Abstract Service is as follows:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { AbstractCachedService, PersistenceService } from 'angular-persistence'
+
+@Injectable
+class myService extends AbstractCachedService<string> {
+    private _cache: ICache<string>;
+
+    constructor (private persistence: PersistenceService) {
+        this._cache = persistenceService.createCache('myName', 
+            (key) => Observable.of('Scott O\'Bryan'));
+    }
+
+    protected getCache(): ICache<string> {
+        return _cache;
+    };
+} 
+```
+
+This will create a service that will add the observable once and then on subsequent calls will simply use the returned value.  If this were to come from the Angular http service, for instance, the service would be called the first time and then the value returned from the service would be used for subsequent calls.  Of course, since this uses a cache in the persistence layer, any one of the supported configuration options may be used when creating the cache.
+
+As mentioned above, the service that is implemented as a result supports canActivate and resolve guards, a clear function which will clear the current cache, a get function which returns an observable to the current value (cached or otherwise) and a change listener which will listen for changes to the cache.  While the code is fairly straight forward, the abstract class was included to hopefully eliminate some of your boiler-plate code.
+
+## <a name="9"></a>9 Contributors:
 - Scott O'Bryan
 
-## <a name="9"></a>9 Acknowledgements:
+## <a name="10"></a>10 Acknowledgements:
 Special thanks to Roberto Simonetti for his angular-library-starter (https://github.com/robisim74/angular-library-starter).  Saved me a bunch of time. 
 
-## <a name="10"></a>10 License
+## <a name="11"></a>11 License
 MIT
