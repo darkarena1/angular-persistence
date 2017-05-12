@@ -7,6 +7,7 @@ This project allows you to persist data within an **Angular 2** or **Angular 4**
 [![Build Status](https://travis-ci.org/darkarena1/angular-persistence.svg?branch=master)](https://travis-ci.org/darkarena1/angular-persistence)
 [![Dependencies](https://david-dm.org/darkarena1/angular-persistence/status.svg)](https://david-dm.org/darkarena1/angular-persistence)
 [![PeerDependencies](https://david-dm.org/darkarena1/angular-persistence/peer-status.svg)](https://david-dm.org/darkarena1/angular-persistence?type=peer)
+[![Join the chat at https://gitter.im/angular-persistence/Lobby](https://badges.gitter.im/angular-persistence/Lobby.svg)](https://gitter.im/angular-persistence/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Contents
 * [1 Basic Usage](#1)
