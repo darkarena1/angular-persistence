@@ -213,7 +213,7 @@ let subscription = persistenceService.changes({key: 'myProp', type: StorageType.
 
 **_NOTE:_ these are hot multi-value Obserables per the Rx specification that return values over time.  It is important to remove your subscription from these observables when you no longer need them or a memory leak might occur.**
 
-## <a name="8"></a>8 Cachable Services:
+## <a name="8"></a>8 Cachable Services
 
 For convienience the framework includes an abstract implementation of a cachable services that can be used to field http requests and whatnot.  The service contains resolve and canActivate guards for the Angular Router as well as a clear function and a get function.  In order to implement this service, you need only provide a cache from the persistence framework itself.  The minimum implementation for this Abstract Service is as follows:
 
