@@ -18,7 +18,7 @@ import { CacheConfig } from '../types/persistence.cache_config';
  * @since 1.0
  */
 export class CacheImpl<T> implements ICache<T> {
-    private _value: T;
+    private _value: T | undefined;
     private _cachedObservable: Observable<T> | undefined;
     private _changes: Observable<T>;
 
