@@ -2,10 +2,10 @@
  * Specifies the various storage types which are able to be used by the framework.
  * Each storage type has different persistence profile, performance profile, and
  * the type of objects is supports.
- * 
+ *
  * @export
  * @enum {number}
- * 
+ *
  * @author Scott O'Bryan
  * @since 1.0
  */

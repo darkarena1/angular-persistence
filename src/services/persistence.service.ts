@@ -1,5 +1,7 @@
 import { Injectable, EventEmitter }                  from '@angular/core';
-import { Observable, Observer, Subscriber, Subject } from 'rxjs';
+import { Observer, Subscriber, Subject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/filter';
 import { CacheImpl }                                 from './persistence.cache-impl';
 import { IStorage }                                  from './storage/storage.interface';
 import { SubStorage }                                from './storage/storage.sub_storage';
@@ -17,16 +19,16 @@ import { ICache }                                    from '../abstracts/persiste
  * itself or used through proxies.  This framework also supports an immutable flag which will
  * instruct the service that the objects stored within should not have any side-effects when
  * objects on the outside are changed.
- * 
+ *
  * Note on immutability: Only clonable objects will be saved when the immutable flag is
  * set.  This framework will do a deep clone of the objects in question, but items such
  * as functions will not be preserved.  Also, immutability is slower.  If you have objects
  * that are well controlled with a single component, it is suggested that you don't save your
  * item as immutable.
- * 
+ *
  * @export
  * @class PersistenceService
- * 
+ *
  * @author Scott O'Bryan
  * @since 1.0
  */
@@ -250,11 +252,11 @@ export class PersistenceService {
      * 
      * @param config the config for the facade
      * @param prefix the prefix to use for isolation of the storage
-     * 
+     *
      * @return a PersistenceFacade object representing this store
      */
     public createContainer(namespace: string, config: PersistenceConfig = {}): IPersistenceContainer {
-        let thisService = this;
+        const thisService = this;
         let myConfig: PersistenceConfig = {
             oneUse: config.oneUse,
             expireAfter: config.expireAfter,

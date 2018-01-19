@@ -1,4 +1,5 @@
-import { Observable, Subscriber } from 'rxjs/Rx';
+import { Subscriber } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { PersistenceService }     from '../..';
 import { StorageType }            from '../..';
 
@@ -232,22 +233,6 @@ describe('PersistenceServiceTest: expires and maxAge', () => {
             expect(service.get('abc123')).toBeUndefined();
             done();
         }, 150);
-    });
-
-    it("Should persist if get is hit within maxAge multiple times", (done) => {
-        service.set('abc123', 'TESTVAL', {timeout: 100});
-        setTimeout ( () => {
-            expect(service.get('abc123')).toBe('TESTVAL');
-            done();
-        }, 75);
-        setTimeout ( () => {
-            expect(service.get('abc123')).toBe('TESTVAL');
-            done();
-        }, 75);
-        setTimeout ( () => {
-            expect(service.get('abc123')).toBe('TESTVAL');
-            done();
-        }, 75);
     });
 
     it("Should remove persisted value if getting a value after maxAge has been reached", (done) => {
