@@ -4,28 +4,28 @@ const NULL_VALUE = '_____NULL_VALUE_____';
 
 /**
  * This is a container that wraps a browser storage object.
- * 
+ *
  * @export
  * @class BrowserContainer
  * @implements {IPersistenceContainer}
- * 
+ *
  * @author Scott O'Bryan
  * @since 1.0
  */
 export class BrowserContainer implements IPersistenceContainer {
     /**
      * Creates an instance of BrowserContainer.
-     * @param {Storage} _storage 
+     * @param {Storage} _storage
      */
     constructor(private _storage: Storage) {
     }
 
     /**
      * Sets a value on the browser storage
-     * 
-     * @param {string} key 
-     * @param {*} value 
-     * @returns {boolean} 
+     *
+     * @param {string} key
+     * @param {*} value
+     * @returns {boolean}
      */
     public set(key: string, value: any): boolean {
         try {
@@ -47,18 +47,18 @@ export class BrowserContainer implements IPersistenceContainer {
 
     /**
      * Gets a value from browser storage
-     * 
-     * @param {string} key 
-     * @returns {*} 
+     *
+     * @param {string} key
+     * @returns {*}
      */
     public get(key: string): any {
-        let strval = this._storage.getItem(key);
+        const strval = this._storage.getItem(key);
 
         if (strval === null) {
             return undefined;
         }
 
-        let value = JSON.parse(strval);
+        const value = JSON.parse(strval);
 
         if (value === NULL_VALUE) {
             return null;
@@ -69,12 +69,12 @@ export class BrowserContainer implements IPersistenceContainer {
 
     /**
      * Removes a value from browser storage
-     * 
-     * @param {string} key 
-     * @returns {*} 
+     *
+     * @param {string} key
+     * @returns {*}
      */
     public remove(key: string): any {
-        let curVal = this.get(key);
+        const curVal = this.get(key);
 
         if (curVal !== undefined) {
             this._storage.removeItem(key);

@@ -1,39 +1,39 @@
-import { SessionStorage }         from './storage.session';
-import { LocalStorage }           from './storage.local';
+import { SessionStorage } from './storage.session';
+import { LocalStorage } from './storage.local';
 import { ImmutableMemoryStorage } from './storage.immutable_memory';
-import { MemoryStorage }          from './storage.memory';
-import { IStorage }               from './storage.interface';
-import { StorageType }            from '../../constants/persistence.storage_type';
+import { MemoryStorage } from './storage.memory';
+import { IStorage } from './storage.interface';
+import { StorageType } from '../../constants/persistence.storage_type';
 
 /**
  * A factory used to retrieve Storage objects
- * 
+ *
  * @export
  * @class StorageFactory
- * 
+ *
  * @author Scott O'Bryan
  * @since 1.0
  */
 export class StorageFactory {
 
+    private _storages: IStorage[] = [];
+
     /**
      * Returns a new instance of the storage factory.
-     * 
+     *
      * @static
-     * @returns {StorageFactory} 
+     * @returns {StorageFactory}
      */
     public static getStorage(): StorageFactory {
         return new StorageFactory();
     }
 
-    private _storages: IStorage[] = [];
-
     /**
      * Returns a singleton object of a specified type.  Storage
      * types are initialized lazily.
-     * 
-     * @param {StorageType} type 
-     * @returns {IStorage} 
+     *
+     * @param {StorageType} type
+     * @returns {IStorage}
      */
     public of(type: StorageType): IStorage {
         let storage = this._storages[type];

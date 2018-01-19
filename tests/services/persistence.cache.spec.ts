@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { PersistenceService, StorageType, ICache } from '../../index';
 
 describe('Persistent Cache Test: Memory', () => {
