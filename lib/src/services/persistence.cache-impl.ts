@@ -3,8 +3,7 @@ import { ICache } from '../abstracts/persistence.cache';
 import { StorageType } from '../constants/persistence.storage_type';
 import { PersistenceService } from '../services/persistence.service';
 import { CacheConfig } from '../types/persistence.cache_config';
-import { ConnectableObservable } from 'rxjs/Observable/ConnectableObservable';
-import 'rxjs/Rx';
+import "rxjs/Rx";
 
 /**
  * Internal class which is an implementation of the ICache interface. This is 

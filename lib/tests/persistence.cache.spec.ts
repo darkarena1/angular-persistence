@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { PersistenceService, StorageType, ICache } from '../../index';
+import { PersistenceService, StorageType, ICache } from '../src/index';
 
 describe('Persistent Cache Test: Memory', () => {
     let service: PersistenceService;

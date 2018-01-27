@@ -1,4 +1,4 @@
-import { PersistenceService, StorageType, IPersistenceContainer } from '../..';
+import { PersistenceService, StorageType, IPersistenceContainer } from '../src/index';
 
 describe('Persistent Container Test: Memory', () => {
     let service: PersistenceService;
