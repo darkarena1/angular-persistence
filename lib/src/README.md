@@ -18,7 +18,7 @@ This project allows you to persist data within an **Angular 5** application writ
 The Module can be used from within your components or other injectables:
 
 ```typescript
-import { PersistenceService } from 'angular-persistence';
+import { PersistenceService } from 'jsg-persistence';
 
 class Foo {
     constructor(private persistenceService: PersistenceService) {}
@@ -196,7 +196,7 @@ For convienience the framework includes an abstract implementation of a cachable
 
 ```typescript
 import { Injectable } from '@angular/core';
-import { AbstractCachedService, PersistenceService } from 'angular-persistence'
+import { AbstractCachedService, PersistenceService } from 'jsg-persistence'
 
 @Injectable
 class myService extends AbstractCachedService<string> {

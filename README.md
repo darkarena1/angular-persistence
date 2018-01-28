@@ -1,4 +1,4 @@
-# angular-persistence
+# jsg-persistence
 >Library to aid in a consistent implementation of browser storage including memory, session, and local storage.
 
 This project allows you to persist data within an **Angular 5** (for olders versions, visit https://github.com/darkarena1/angular-persistence) application written in _TypeScript_, _ES6_ or _ES5_.  The implementations of the various storage techniques have been expanded and normalized such that no specific knowledge should be needed of the various storage types and thier uses.  In addition, the library will help with cleanup of persistent cached data by keeping track of which data has been loaded and where it is put.
@@ -22,12 +22,12 @@ This project allows you to persist data within an **Angular 5** (for olders vers
 To use this library, install it via npm into your project.  
 
 ```shell
-npm install angular-persistence --save 
+npm install jsg-persistence --save 
 ```
 
 Next install the Persistence Module into your module:
 ```typescript
-import { PersistenceModule } from 'angular-persistence';
+import { PersistenceModule } from 'jsg-persistence';
 
 @ngModule System.config({
     import: [PersistenceModule]
@@ -37,7 +37,7 @@ import { PersistenceModule } from 'angular-persistence';
 Once imported, the Module can be used from within your components or other injectables:
 
 ```typescript
-import { PersistenceService } from 'angular-persistence';
+import { PersistenceService } from 'jsg-persistence';
 
 class Foo {
     constructor(private persistenceService: PersistenceService) {}
@@ -215,7 +215,7 @@ For convienience the framework includes an abstract implementation of a cachable
 
 ```typescript
 import { Injectable } from '@angular/core';
-import { AbstractCachedService, PersistenceService } from 'angular-persistence'
+import { AbstractCachedService, PersistenceService } from 'jsg-persistence'
 
 @Injectable
 class myService extends AbstractCachedService<string> {
