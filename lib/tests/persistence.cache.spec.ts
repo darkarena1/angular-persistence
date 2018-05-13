@@ -1,4 +1,7 @@
-import { Observable } from 'rxjs/Observable';
+
+import {of as observableOf,  Observable } from 'rxjs';
+
+import {timeout} from 'rxjs/operators';
 import { PersistenceService, StorageType, ICache } from '../src/index';
 
 describe('Persistent Cache Test: Memory', () => {
@@ -434,7 +437,7 @@ describe('Persistent Cache Test: Memory - short observable', () => {
     beforeEach(() => {
         number = 0;
         service = new PersistenceService();
-        cache = service.createCache('abc123', () => Observable.of('TESTVAL ' + number++));
+        cache = service.createCache('abc123', () => observableOf('TESTVAL ' + number++));
     });
 
     afterEach(() => {
@@ -489,7 +492,7 @@ describe('Persistent Cache Test: Memory - long observable', () => {
     beforeEach(() => {
         number = 0;
         service = new PersistenceService();
-        cache = service.createCache('abc123', () => Observable.of('TESTVAL ' + number++).timeout(100));
+        cache = service.createCache('abc123', () => observableOf('TESTVAL ' + number++).pipe(timeout(100)));
     });
 
     afterEach(() => {
