@@ -1,10 +1,12 @@
+
+import {map} from 'rxjs/operators';
 import {
     ActivatedRouteSnapshot,
     CanActivate,
     Resolve,
     RouterStateSnapshot
     } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ICache } from './persistence.cache';
 import { PersistenceService } from '../services/persistence.service';
 
@@ -94,7 +96,7 @@ export abstract class AbstractCachedService<T> implements ICache<T>, CanActivate
      * @memberOf AbstraceCachedService
      */
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-        return this.get().map((val) => val ? true : false);
+        return this.get().pipe(map((val) => val ? true : false));
     }
 
 

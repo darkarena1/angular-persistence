@@ -1,6 +1,6 @@
 {
   "name": "jsg-persistence",
-  "version": "0.0.5",
+  "version": "1.0.1",
   "description": "Persistence Core Library",
   "main": "./bundles/core.umd.js",
   "typings": "./core.d.ts",

@@ -1,7 +1,8 @@
+
+import {filter} from 'rxjs/operators';
 import { Injectable, EventEmitter }                  from '@angular/core';
-import { Observer, Subscriber, Subject } from 'rxjs';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/filter';
+import { Observer, Subscriber, Subject ,  Observable } from 'rxjs';
+
 import { CacheImpl }                                 from './persistence.cache-impl';
 import { IStorage }                                  from './storage/storage.interface';
 import { SubStorage }                                from './storage/storage.sub_storage';
@@ -55,12 +56,12 @@ export class PersistenceService {
 
         // apply the key filter
         if (config.key) {
-            observable = observable.filter((val) => val.key === config.key);
+            observable = observable.pipe(filter((val) => val.key === config.key));
         }
 
         // apply the type filter
         if (config.type) {
-            observable = observable.filter((val) => val.type === config.type);
+            observable = observable.pipe(filter((val) => val.type === config.type));
         }
 
         return observable;
