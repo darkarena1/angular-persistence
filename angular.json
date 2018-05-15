@@ -1,0 +1,78 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "jsg-core-library": {
+      "root": "",
+      "sourceRoot": "lib",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "lib/index.html",
+            "main": "lib/main.ts",
+            "tsConfig": "tsconfig.json",
+            "polyfills": "lib/polyfills.ts",
+            "assets": [],
+            "styles": [],
+            "scripts": []
+          },
+          "configurations": { }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "jsg-core-library:build"
+          },
+          "configurations": {
+            "prod": {
+              "browserTarget": "jsg-core-library:build:prod"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "jsg-core-library:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "lib/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "lib/polyfills.ts",
+            "tsConfig": "lib/tsconfig.spec.json",
+            "scripts": [],
+            "styles": [],
+            "assets": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "lib/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "jsg-core-library",
+  "schematics": {
+    "@schematics/angular:component": {
+      "prefix": "jsg",
+      "styleext": "scss"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "jsg"
+    }
+  }
+}

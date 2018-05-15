@@ -1,8 +1,7 @@
-# jsg-persistence
+# persistence
 >Library to aid in a consistent implementation of browser storage including memory, session, and local storage.
 
-This project allows you to persist data within an **Angular 6** (for 5.2.x version visit https://github.com/jserra91/angular-persistence/tree/5.2.x and for other olders versions, visit https://github.com/darkarena1/angular-persistence) application written in _TypeScript_, _ES6_ or _ES5_.  The implementations of the various storage techniques have been expanded and normalized such that no specific knowledge should be needed of the various storage types and thier uses.  In addition, the library will help with cleanup of persistent cached data by keeping track of which data has been loaded and where it is put.
-
+This project allows you to persist data within an **Angular 5** application written in _TypeScript_, _ES6_ or _ES5_.  The implementations of the various storage techniques have been expanded and normalized such that no specific knowledge should be needed of the various storage types and thier uses.  In addition, the library will help with cleanup of persistent cached data by keeping track of which data has been loaded and where it is put.
 
 ## Contents
 * [1 Basic Usage](#1)
@@ -13,28 +12,10 @@ This project allows you to persist data within an **Angular 6** (for 5.2.x versi
 * [6 Observable Caches](#6)
 * [7 Change Observables](#7)
 * [8 Cachable Services](#8)
-* [9 Contributors](#9)
-* [10 Acknowledgements](#10)
-* [11 License](#11)
 
 ## <a name="1"></a>1 Basic Usage
 
-To use this library, install it via npm into your project.  
-
-```shell
-npm install jsg-persistence --save 
-```
-
-Next install the Persistence Module into your module:
-```typescript
-import { PersistenceModule } from 'jsg-persistence';
-
-@ngModule System.config({
-    import: [PersistenceModule]
-});
-```
-
-Once imported, the Module can be used from within your components or other injectables:
+The Module can be used from within your components or other injectables:
 
 ```typescript
 import { PersistenceService } from 'jsg-persistence';
@@ -48,13 +29,13 @@ To access persisted properties, use the following:
 
 ```typescript
 // will return true if successful
-persistenceService.set('myName', 'scott');
+persistenceService.set('jordi', 'Girona');
 
-// returns scott
-persistenceService.get('myName');
+// returns Girona
+persistenceService.get('jordi');
 
-// returns previous value (scott) and removes
-persistenceService.remove('myName');
+// returns previous value (Girona) and removes
+persistenceService.remove('jordi');
 
 // clears all storage saved by this service, and returns a list 
 // of keys that were removed
@@ -79,9 +60,9 @@ This library is capable of handling various storage types within the browser.  T
 - **LOCAL**: this storage type is persistent permanently.  If used too extensively, this can clog up your browser.  It is suggested hat you specify a "maxAge" for objects on the local storage.  Otherwise this works just like Session storage with the same limintations.
 
 ```typescript
-persistenceService.set('myName', 'scott', {type: StorageType.SESSION});  
-persistenceService.get('myName', StorageType.SESSION);
-persistenceService.remove('myName', StorageType.SESSION);
+persistenceService.set('jordi', 'Girona', {type: StorageType.SESSION});  
+persistenceService.get('jordi', StorageType.SESSION);
+persistenceService.remove('jordi', StorageType.SESSION);
 persistenceService.removeAll(StorageType.SESSION);
 persistenceService.clean(StorageType.SESSION);
 ```
@@ -95,7 +76,7 @@ Config objects are used for several methods within the persistence framework to 
 - **oneUse** - this option is not available for all configurable methods.  Some methods (like createCache) can't support the oneUse option because of thier nature.  This option is great for short term storage.
 
 ```typescript
-persistenceService.set('myName', 'scott', {type: StorageType.SESSION, oneUse: true});
+persistenceService.set('jordi', 'Girona', {type: StorageType.SESSION, oneUse: true});
 ```
 
 ## <a name="4"></a>4 Isolated Containers
@@ -235,12 +216,3 @@ class myService extends AbstractCachedService<string> {
 This will create a service that will add the observable once and then on subsequent calls will simply use the returned value.  If this were to come from the Angular http service, for instance, the service would be called the first time and then the value returned from the service would be used for subsequent calls.  Of course, since this uses a cache in the persistence layer, any one of the supported configuration options may be used when creating the cache.
 
 As mentioned above, the service that is implemented as a result supports canActivate and resolve guards, a clear function which will clear the current cache, a get function which returns an observable to the current value (cached or otherwise) and a change listener which will listen for changes to the cache.  While the code is fairly straight forward, the abstract class was included to hopefully eliminate some of your boiler-plate code.
-
-## <a name="9"></a>9 Contributors:
-- Scott O'Bryan
-
-## <a name="10"></a>10 Acknowledgements:
-Special thanks to Roberto Simonetti for his angular-library-starter (https://github.com/robisim74/angular-library-starter).  Saved me a bunch of time. 
-
-## <a name="11"></a>11 License
-MIT

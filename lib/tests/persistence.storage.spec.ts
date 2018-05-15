@@ -1,8 +1,9 @@
-import { MemoryStorage }          from '../../src/services/storage/storage.memory';
-import { ImmutableMemoryStorage } from '../../src/services/storage/storage.immutable_memory';
-import { SessionStorage }         from '../../src/services/storage/storage.session';
-import { LocalStorage }           from '../../src/services/storage/storage.local';
-import { IStorage }               from '../../src/services/storage/storage.interface';
+import { IStorage } from "../src/services/storage/storage.interface";
+import { MemoryStorage } from "../src/services/storage/storage.memory";
+import { ImmutableMemoryStorage } from "../src/services/storage/storage.immutable_memory";
+import { SessionStorage } from "../src/services/storage/storage.session";
+import { LocalStorage } from "../src/services/storage/storage.local";
+
 
 describe('MemoryStorage', () => {
     let storage: IStorage;

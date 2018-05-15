@@ -1,7 +1,7 @@
-import { Subscriber } from 'rxjs/Rx';
-import { Observable } from 'rxjs/Observable';
-import { PersistenceService }     from '../..';
-import { StorageType }            from '../..';
+import { Subscriber } from 'rxjs';
+import { Observable } from 'rxjs';
+import { PersistenceService }     from '../src/index';
+import { StorageType }            from '../src/index';
 
 describe('PersistenceServiceTest: Memory', () => {
     let service: PersistenceService;

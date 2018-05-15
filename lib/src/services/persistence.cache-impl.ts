@@ -1,4 +1,7 @@
-import { Observable } from 'rxjs/Observable';
+
+import {of as observableOf,  Observable } from 'rxjs';
+
+import {tap, publishLast, map, publishBehavior, refCount} from 'rxjs/operators';
 import { ICache } from '../abstracts/persistence.cache';
 import { StorageType } from '../constants/persistence.storage_type';
 import { PersistenceService } from '../services/persistence.service';
@@ -40,10 +43,10 @@ export class CacheImpl<T> implements ICache<T> {
         // For safety sake, ensure that oneUse is not present in configuration
         service.defineProperty(this, '_value', key, config);
 
-        this._changes = service.changes({key, type })
-            .map((def) => this._value)
-            .publishBehavior(this._value)
-            .refCount();
+        this._changes = service.changes({key, type }).pipe(
+            map((def) => this._value),
+            publishBehavior(this._value),
+            refCount(),);
     }
 
     /**
@@ -69,11 +72,11 @@ export class CacheImpl<T> implements ICache<T> {
                 const loaded = this._loader();
 
                 if (loaded && loaded instanceof Observable) {
-                    const newObservable = (loaded as Observable<T>)
-                        .publishLast()
-                        .refCount()
-                        .do((value) => this._value = value)
-                        .do((value) => this._cachedObservable = undefined);
+                    const newObservable = (loaded as Observable<T>).pipe(
+                        publishLast(),
+                        refCount(),
+                        tap((value) => this._value = value),
+                        tap((value) => this._cachedObservable = undefined),);
                     // cache the observable before publishing
                     this._cachedObservable = newObservable;
                     return newObservable;
@@ -88,7 +91,7 @@ export class CacheImpl<T> implements ICache<T> {
         }
 
         // We have a real value so we need to make an observable that returns said value
-        return Observable.of(result);
+        return observableOf(result);
     }
 
     /**
