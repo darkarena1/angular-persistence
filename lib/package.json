@@ -1,0 +1,22 @@
+{
+  "name": "jsg-persistence",
+  "version": "1.0.1",
+  "description": "Persistence Core Library",
+  "main": "./bundles/core.umd.js",
+  "typings": "./core.d.ts",
+  "author": "Jordi Serra Gonzalez",
+  "readme": "https://github.com/jserra91/angular-persistence/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jserra91/angular-persistence"
+  },
+  "license": "ISC",
+  "homepage": "https://github.com/jserra91/angular-persistence/README.md",
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "@angular/common": "^5.0.0"
+  },
+  "dependencies": {
+    "tslib": "^1.7.1"
+  }
+}
