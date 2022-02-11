@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 
 /**
  * A caching system that uses the Angular Persistence framework for storage.
